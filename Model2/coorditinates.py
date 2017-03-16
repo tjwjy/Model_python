@@ -1,7 +1,7 @@
 #coding=gbk
-import powerlow as pl
+import Model.powerlow as pl
 import random
-import Location
+import Model.Location
 def get_simple_grid(dimenssionX,dimenssionY,powerlow_args=0):
     L_Place = []
     tag = 0

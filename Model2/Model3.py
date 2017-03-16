@@ -2,45 +2,50 @@
 import math
 import random
 
-import Model.powerlow
-import Model2.coorditinates
+import powerlow
+import coorditinates
 
 
 class Model():
     args_model = []
-    args_step = []
     args_t = []
-    args_coordition = []
-    simulate_time = 0
     # 初始化数据
     # args_model包含参数包括S，p，和指数gama
-    # args_t包含参数包括时间的指数，上下限,要模拟的结果次数
-    # args_step 包含步长的信息，指数，上限
-    # args_grid 网格的参数，包括网格【长，宽】，【参数，如正太分布或者幂律参数】，得到的点的个数
     grid=[]
     locations=[]
     steps = []
-    ts = []
     # 在初始化数据给予的情况下逐渐被赋值的参数
     ids = []
     frequency = []
-    start_position=[]
-
+    HomePosition=[]
+    visited_Place=[]
+    #set the polace you have visit
     # 需要算出路径后给出的参数
-    def __init__(self, args_model, args_step, args_t, args_grid, simulate_time):
-        self.args_grid = args_grid
+    t_begin=0
+    t_end=0
+    t_now=0
+    ts=[]
+    def __init__(self, args_model,args_t,homeposition,visited_Place,grid,locations):
         self.args_model = args_model
-        self.args_step = args_step
-        self.args_t = args_t
-        self.simulate_time = simulate_time
+        self.args_t=args_t
+        self.visited_Place=visited_Place
+        self.HomePosition=homeposition
+        self.grid=grid
+        self.locations=locations
+        self.t_now=self.t_begin
         self.set_t()
-        self.set_grid()
+    def set_tbegin(self,t_begin,t_end):
+        self.t_begin=t_begin
+        self.t_end=t_end
     def get_route(self):
+        L_place=[]
+        L_tempPlace = self.visited_Place # 访问的集合
         if(self.grid!=0):
-            L_place = [item for item in self.locations]  # 没有访问的集合
+            for item in self.locations:
+                if(item  not in L_tempPlace):
+                    L_place.append(item) # 没有访问的集合
         else:
             exit()
-        L_tempPlace = []  # 访问的集合
         gama = self.args_model[2]
         S = self.args_model[0]
         r = self.args_model[1]
@@ -50,9 +55,8 @@ class Model():
         L_place.remove(postion)
         self.start_position=postion
         S = S + 1
-        index = 0
-        time_sum = 0
-        while ((time_sum < self.simulate_time) & (index < len(self.ts) - 1)):
+        index=1
+        while ((self.t_now < self.t_end) & (index < len(self.ts) - 1)):
             tag = r * S ** (gama)
             tag2 = random.random()
             if (tag > tag2):
@@ -70,15 +74,12 @@ class Model():
                 postion = random.choice(L_tempPlace)
                 L_tempPlace.append(postion)
                 index = index + 1
-            time_sum = time_sum + self.ts[index]
+            self.t_now = self.t_now + self.ts[index]
         for tempPlace in L_tempPlace:
             self.ids.append(tempPlace[2])
         return L_tempPlace
 
     def get_next_position(self):
-        pass
-
-    def set_grid(self):
         pass
     def set_t(self):
         if (len(self.args_t) != 0):
@@ -88,13 +89,6 @@ class Model():
 class Normal_Model(Model):
     def dis(self,temp1,temp2):
         return math.pow((temp1[0]-temp2[0]),2)+math.pow((temp1[1]-temp2[1]),2)
-    def set_grid(self):
-        if (len(self.args_grid) == 3):
-            temp = Model2.coorditinates.normal_raster(self.args_grid[0], self.args_grid[1], self.args_grid[2])
-            self.grid=temp.grid
-            self.locations=temp.locationList
-        else:
-            print 'grid args is wrong'
     def get_next_position(self,postion,L_place):
         # 概率p=size/pow(d.beta)
         beta = self.args_step[0]
@@ -124,41 +118,5 @@ class Normal_Model(Model):
             return nextstep[0]
         else:
             return 0
-
-class Random_Model(Normal_Model):
-    def set_grid(self):
-        if (len(self.args_grid) == 3):
-            temp = Model2.coorditinates.random_raster(self.args_grid[0], self.args_grid[1], self.args_grid[2])
-            self.grid=temp.grid
-            self.locations=temp.locationList
-        else:
-            print 'grid args is wrong'
-class PowerLaw_grid_Model(Normal_Model):
-    def set_grid(self):
-        if (len(self.args_grid) == 3):
-            temp = Model2.coorditinates.powerLaw_grid(self.args_grid[0], self.args_grid[1], self.args_grid[2])
-            self.grid = temp.grid
-            self.locations = temp.locationList
-        else:
-            print 'grid args is wrong'
-
-class Simple_grid_Model(Normal_Model):
-    def set_grid(self):
-        if (len(self.args_grid) == 3):
-            temp = Model2.coorditinates.simple_grid(self.args_grid[0], self.args_grid[2])
-            self.grid = temp.grid
-            self.locations = temp.locationList
-        else:
-            print 'grid args is wrong'
-
-
-class ExReModel(Model):
-    def set_grid(self):
-        if(len(self.args_grid==3)):
-            temp= Model2.coorditinates.powerlaw_grid(self.args_grid[0], self.args_grid[1], self.args_grid[2])
-            self.grid=temp.grid
-            self.locations=temp.locationList
-        else:
-            print '创建坐标系过程中参数错误，是否和其他模型参数弄混'
 
 
