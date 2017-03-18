@@ -38,10 +38,10 @@ def get_powerlaw_rvs(beta,size):
     while(i<size):
         y.append(random.random())
         i=i+1
-    a=(-1+beta2)/(1-beta2)
+    a=pow((-1+beta2),1/(1-beta2))
     x=[]
     for y1 in y:
-        temp=(-y1-a)*(-1+beta2)
+        temp=-y1*(-1+beta2)+pow(a,1-beta2)
         temp2=math.pow(temp,(1/(1-beta2)))
         x.append(temp2)
     return x

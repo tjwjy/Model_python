@@ -1,11 +1,8 @@
 #coding=gbk
+import coorditinates
+import powerlow
 import math
 import random
-
-import Model.powerlow
-import Model2.coorditinates
-
-
 class Model():
     args_model = []
     args_step = []
@@ -82,7 +79,7 @@ class Model():
         pass
     def set_t(self):
         if (len(self.args_t) != 0):
-            self.ts = Model.powerlow.get_float_powerlaw(self.args_t[0], self.args_t[1], self.args_t[2], self.args_t[3])
+            self.ts = powerlow.get_float_powerlaw(self.args_t[0], self.args_t[1], self.args_t[2], self.args_t[3])
 
 
 class Normal_Model(Model):
@@ -90,7 +87,7 @@ class Normal_Model(Model):
         return math.pow((temp1[0]-temp2[0]),2)+math.pow((temp1[1]-temp2[1]),2)
     def set_grid(self):
         if (len(self.args_grid) == 3):
-            temp = Model2.coorditinates.normal_raster(self.args_grid[0], self.args_grid[1], self.args_grid[2])
+            temp = coorditinates.normal_raster(self.args_grid[0], self.args_grid[1], self.args_grid[2])
             self.grid=temp.grid
             self.locations=temp.locationList
         else:
@@ -128,7 +125,7 @@ class Normal_Model(Model):
 class Random_Model(Normal_Model):
     def set_grid(self):
         if (len(self.args_grid) == 3):
-            temp = Model2.coorditinates.random_raster(self.args_grid[0], self.args_grid[1], self.args_grid[2])
+            temp = coorditinates.random_raster(self.args_grid[0], self.args_grid[1], self.args_grid[2])
             self.grid=temp.grid
             self.locations=temp.locationList
         else:
@@ -136,7 +133,7 @@ class Random_Model(Normal_Model):
 class PowerLaw_grid_Model(Normal_Model):
     def set_grid(self):
         if (len(self.args_grid) == 3):
-            temp = Model2.coorditinates.powerLaw_grid(self.args_grid[0], self.args_grid[1], self.args_grid[2])
+            temp = coorditinates.powerLaw_grid(self.args_grid[0], self.args_grid[1], self.args_grid[2])
             self.grid = temp.grid
             self.locations = temp.locationList
         else:
@@ -145,7 +142,7 @@ class PowerLaw_grid_Model(Normal_Model):
 class Simple_grid_Model(Normal_Model):
     def set_grid(self):
         if (len(self.args_grid) == 3):
-            temp = Model2.coorditinates.simple_grid(self.args_grid[0], self.args_grid[2])
+            temp = coorditinates.simple_grid(self.args_grid[0], self.args_grid[2])
             self.grid = temp.grid
             self.locations = temp.locationList
         else:
@@ -155,7 +152,7 @@ class Simple_grid_Model(Normal_Model):
 class ExReModel(Model):
     def set_grid(self):
         if(len(self.args_grid==3)):
-            temp= Model2.coorditinates.powerlaw_grid(self.args_grid[0], self.args_grid[1], self.args_grid[2])
+            temp=coorditinates.powerlaw_grid(self.args_grid[0],self.args_grid[1],self.args_grid[2])
             self.grid=temp.grid
             self.locations=temp.locationList
         else:
