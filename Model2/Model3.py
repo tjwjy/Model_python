@@ -2,6 +2,7 @@
 import math
 import random
 import powerlow
+import Route
 
 
 class Model():
@@ -21,7 +22,6 @@ class Model():
     visited_Place=[]
     #set the polace you have visit
     # 需要算出路径后给出的参数
-    t_begin=0
     t_end=0
     t_now=0
     ts=[]
@@ -34,10 +34,9 @@ class Model():
         self.WorkPosition=workposition
         self.grid=grid
         self.locations=locations
-        self.t_now=self.t_begin
         self.set_t()
     def set_tbegin(self,t_begin,t_end):
-        self.t_begin=t_begin
+        self.t_now=t_begin
         self.t_end=t_end
     def get_route(self):
         L_place=[]
@@ -87,39 +86,6 @@ class Model():
         if (len(self.args_t) != 0):
             self.ts = powerlow.get_float_powerlaw(self.args_t[0], self.args_t[1], self.args_t[2], self.args_t[3])
 
-
-class Normal_Model(Model):
-    def dis(self,temp1,temp2):
-        return math.pow((temp1[0]-temp2[0]),2)+math.pow((temp1[1]-temp2[1]),2)
-    def get_next_position(self,postion,L_place):
-        # 概率p=size/pow(d.beta)
-        beta = self.args_step[0]
-        max_step = self.args_step[1]
-        gridDimension = self.args_grid[0]
-        psum = []
-        temp_sum = 0
-        temp_positon = []
-        # 在半径内的所有满足条件的x，y之差
-        for p in L_place:
-            dis=self.dis(postion, p)
-            if(dis<max_step*max_step):
-                temp_positon.append([p,dis])
-        temp2 = []
-        for t_p in temp_positon:
-            if (t_p[1] > 0):
-                p = t_p[0][3]*pow(t_p[1], beta)
-                temp_sum = temp_sum + p
-                psum.append(temp_sum)
-        if (len(psum) > 0):
-            ptemp = random.uniform(0, psum[len(psum) - 1])
-            nextstep = None
-            for index, temp in enumerate(psum):
-                if (ptemp < temp):
-                    nextstep = temp_positon[index]
-                    break
-            return nextstep[0]
-        else:
-            return 0
 class Commute_Model(Model):
     def dis(self,temp1):
         if(len(self.HomePosition)*len(self.WorkPosition)>0):
@@ -157,6 +123,7 @@ class Commute_Model(Model):
         else:
             return 0
     def get_route(self,flag):
+        route=Route.route([],[])
         L_place = []
         L_tempPlace = self.visited_Place  # 访问的集合
         if (self.grid != 0):
@@ -197,10 +164,12 @@ class Commute_Model(Model):
                 postion = random.choice(L_tempPlace)
                 L_tempPlace.append(postion)
                 index = index + 1
+            route.time.append(self.t_now)
+            route.route.append(postion)
             self.t_now = self.t_now + self.ts[index]
         for tempPlace in L_tempPlace:
             self.ids.append(tempPlace[2])
-        return L_tempPlace
+        return L_tempPlace,route
 
 class HomeorWork_Model(Model):
     def dis(self,temp1,flag):
@@ -240,6 +209,7 @@ class HomeorWork_Model(Model):
             return 0
 
     def get_route(self,flag):
+        route=Route.route([],[])
         L_place = []
         L_tempPlace = self.visited_Place  # 访问的集合
         if (self.grid != 0):
@@ -280,10 +250,12 @@ class HomeorWork_Model(Model):
                 postion = random.choice(L_tempPlace)
                 L_tempPlace.append(postion)
                 index = index + 1
+            route.time.append(self.t_now)
+            route.route.append(postion)
             self.t_now = self.t_now + self.ts[index]
         for tempPlace in L_tempPlace:
             self.ids.append(tempPlace[2])
-        return L_tempPlace
+        return L_tempPlace,route
 
 
 

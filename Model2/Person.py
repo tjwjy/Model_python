@@ -2,7 +2,7 @@
 #the class person remain some basic attributes of the people
 #there are something that they chose randomly to simulate the real world
 import random
-
+import Route
 import Model3
 import coorditinates
 
@@ -35,6 +35,9 @@ class Person():
     time=0
     time24=0
     stept=[]
+    Personroute=Route.route([],[])
+
+
 
     #function
     def set_grid(self):
@@ -93,6 +96,7 @@ class normal_person(Person):
     def __init__(self,args_model, args_step, args_t, args_grid, simulate_time):
         self.set_args(args_model, args_step, args_t, args_grid, simulate_time)
         self.set_grid()
+        self.Personroute=Route.route(self.grid, self.locations)
         self.set_home_loc()
         self.set_work_loc()
 
@@ -107,7 +111,11 @@ class normal_person(Person):
                 #pass
                 temp_Model=Model3.Commute_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.commute_LocationList,self.home_loc,self.work_loc)
                 temp_Model.set_tbegin(t_now,self.work_time[0])
-                self.commute_LocationList=temp_Model.get_route(0)
+                self.commute_LocationList,tempRoute=temp_Model.get_route(0)
+                time=tempRoute.time
+                route=tempRoute.route
+                state=3
+                self.Personroute.add_item(route,time,state)
                 t_now=temp_Model.t_now
                 #do things commute
                 #parameter is t_now and work_time[0]
@@ -115,15 +123,23 @@ class normal_person(Person):
                 #pass
                 temp_Model = Model3.HomeorWork_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.work_locatonList,self.home_loc,self.work_loc)
                 temp_Model.set_tbegin(t_now, self.work_time[1])
-                self.work_locatonList = temp_Model.get_route(1)
+                self.work_locatonList,tempRoute = temp_Model.get_route(1)
+                time=tempRoute.time
+                route=tempRoute.route
+                state=2
+                self.Personroute.add_item(route,time,state)
                 t_now = temp_Model.t_now
                 #do something around work
             if(t_now>self.work_time[1] and t_now<self.rest_time[0]):
                 #pass
                 temp_Model = Model3.Commute_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.commute_LocationList,self.home_loc,self.work_loc)
                 temp_Model.set_tbegin(t_now, self.rest_time[0])
-                self.commute_LocationList = temp_Model.get_route(0)
+                self.commute_LocationList,tempRoute = temp_Model.get_route(0)
                 t_now = temp_Model.t_now
+                time=tempRoute.time
+                route=tempRoute.route
+                state=3
+                self.Personroute.add_item(route,time,state)
                 #do things commute and then do things around home
             if(t_now>self.rest_time[0] or t_now<self.rest_time[1]):
                 t_now=self.rest_time[1]
