@@ -214,7 +214,6 @@ class HomeorWork_Model(Model):
         # 概率p=size/pow(d.beta)
         beta = self.args_step[0]
         max_step = self.args_step[1]
-        gridDimension = self.args_grid[0]
         psum = []
         temp_sum = 0
         temp_positon = []
@@ -253,12 +252,13 @@ class HomeorWork_Model(Model):
         S = self.args_model[0]
         r = self.args_model[1]
         # 随机选择起始点，并初始化所要用到的循环数据
-        if(flag==0):
-            postion=self.HomePosition
-        if(flag==1):
-            postion=self.WorkPosition
+        if (flag == 0):
+            postion = self.HomePosition
+        if (flag == 1):
+            postion = self.WorkPosition
         L_tempPlace.append(postion)
-        L_place.remove(postion)
+        if (postion in L_place):
+            L_place.remove(postion)
         self.start_position = postion
         S = S + 1
         index = 1
@@ -267,7 +267,7 @@ class HomeorWork_Model(Model):
             tag2 = random.random()
             if (tag > tag2):
                 # 这时候去探索新的场所代码
-                next_postion = self.get_next_position(postion, L_place,flag)
+                next_postion = self.get_next_position(L_place,flag)
                 if (next_postion == 0):
                     continue
                 postion = next_postion

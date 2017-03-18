@@ -82,12 +82,12 @@ class normal_person(Person):
         else:
             print 'you should set grid first'
     def set_work_time(self):
-        start=random.normalvariate(7.5,1)
+        start=random.normalvariate(7.5,.5)
         end=random.normalvariate(17.5,1)
         self.work_time=[start,end]
     def set_rest_time(self):
         start = random.normalvariate(22, 1)
-        end = random.normalvariate(6.5, 1)
+        end = random.normalvariate(6.5, .5)
         self.rest_time = [start, end]
 
     def __init__(self,args_model, args_step, args_t, args_grid, simulate_time):
@@ -98,35 +98,35 @@ class normal_person(Person):
 
 
     def simulate(self):
-        t_now=6.5
         simulate_time=0
         while(simulate_time<self.simulate_time):
             self.set_work_time()
             self.set_rest_time()
-            if(t_now<self.work_time[0]and t_now>self.rest_time[1]):
+            t_now = self.rest_time[1]
+            if(t_now<self.work_time[0]and t_now>=self.rest_time[1]):
                 #pass
                 temp_Model=Model3.Commute_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.commute_LocationList,self.home_loc,self.work_loc)
                 temp_Model.set_tbegin(t_now,self.work_time[0])
-                self.work_locatonList=temp_Model.get_route(0)
+                self.commute_LocationList=temp_Model.get_route(0)
                 t_now=temp_Model.t_now
                 #do things commute
                 #parameter is t_now and work_time[0]
-            elif(t_now>self.work_time[0] and t_now<self.work_time[1]):
-                pass
-                # temp_Model = Model3.HomeorWork_Model(self.args_model, self.args_t, self.grid, self.locations,
-                #                                   self.commute_LocationList, self.home_loc, self.work_locatonList)
-                # temp_Model.set_t(t_now, self.work_time[1])
-                # self.work_locatonList = temp_Model.get_route(0)
-                # t_now = temp_Model.t_now
+            if(t_now>self.work_time[0] and t_now<self.work_time[1]):
+                #pass
+                temp_Model = Model3.HomeorWork_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.work_locatonList,self.home_loc,self.work_loc)
+                temp_Model.set_tbegin(t_now, self.work_time[1])
+                self.work_locatonList = temp_Model.get_route(1)
+                t_now = temp_Model.t_now
                 #do something around work
-            elif(t_now>self.work_time[1] and t_now<self.rest_time[0]):
-                pass
-                # temp_Model = Model3.Commute_Model(self.args_model, self.args_t, self.grid, self.locations,
-                #                                   self.commute_LocationList, self.home_loc, self.work_locatonList)
-                # temp_Model.set_t(t_now, self.rest_time[0])
-                # self.work_locatonList = temp_Model.get_route(1)
-                # t_now = temp_Model.t_now
+            if(t_now>self.work_time[1] and t_now<self.rest_time[0]):
+                #pass
+                temp_Model = Model3.Commute_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.commute_LocationList,self.home_loc,self.work_loc)
+                temp_Model.set_tbegin(t_now, self.rest_time[0])
+                self.commute_LocationList = temp_Model.get_route(0)
+                t_now = temp_Model.t_now
                 #do things commute and then do things around home
-            else:
-                pass
+            if(t_now>self.rest_time[0] or t_now<self.rest_time[1]):
+                t_now=self.rest_time[1]
+                simulate_time+=1
                 #sleep
+        print 'ok'
