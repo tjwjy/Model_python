@@ -132,17 +132,31 @@ class normal_person(Person):
                 #do something around work
             if(t_now>self.work_time[1] and t_now<self.rest_time[0]):
                 #pass
-                temp_Model = Model3.Commute_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.commute_LocationList,self.home_loc,self.work_loc)
-                temp_Model.set_tbegin(t_now, self.rest_time[0])
-                self.commute_LocationList,tempRoute = temp_Model.get_route(0)
-                t_now = temp_Model.t_now
-                time=tempRoute.time
-                route=tempRoute.route
-                state=3
-                self.Personroute.add_item(route,time,state)
+                while(t_now<self.rest_time[0]):
+                    temp=random.random()
+                    if(temp>0.9):
+                        break
+                    temp_Model = Model3.Commute_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.commute_LocationList,self.home_loc,self.work_loc)
+                    temp_Model.set_tbegin(t_now,t_now+0.1)
+                    self.commute_LocationList,tempRoute = temp_Model.get_route(1)
+                    t_now = temp_Model.t_now
+                    time=tempRoute.time
+                    route=tempRoute.route
+                    state=3
+                    self.Personroute.add_item(route,time,state)
+                if(t_now<self.rest_time[0]):
+                    temp_Model = Model3.HomeorWork_Model(self.args_model, self.args_t, self.args_steps, self.grid,
+                                                         self.locations, self.home_locationList, self.home_loc,
+                                                         self.work_loc)
+                    temp_Model.set_tbegin(t_now, self.rest_time[0])
+                    self.work_locatonList, tempRoute = temp_Model.get_route(0)
+                    time = tempRoute.time
+                    route = tempRoute.route
+                    state = 3
+                    self.Personroute.add_item(route, time, state)
+                    t_now = temp_Model.t_now
                 #do things commute and then do things around home
             if(t_now>self.rest_time[0] or t_now<self.rest_time[1]):
                 t_now=self.rest_time[1]
                 simulate_time+=1
                 #sleep
-        print 'ok'
