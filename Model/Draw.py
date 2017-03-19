@@ -64,8 +64,8 @@ class draw():
             x=[]
             y=[]
             for j in range(len(locationWeight[0])):
-                y .append(self.Mymodel.grid[j][0])
-                x .append( self.Mymodel.grid[j][1])
+                x .append(self.Mymodel.grid[j][0])
+                y .append( self.Mymodel.grid[j][1])
             size=locationWeight[i]
             im=plt.scatter(x,y,s=size)
             ims.append([im])
@@ -89,8 +89,8 @@ class draw():
             size=[]
             size.append(100)
             for j in range(len(locationWeight[i])):
-                y.append(self.Mymodel.locations[j][0])
-                x.append(self.Mymodel.locations[j][1])
+                x.append(self.Mymodel.locations[j][0])
+                y.append(self.Mymodel.locations[j][1])
                 c.append('b')
             size+=locationWeight[i]
             im = plt.scatter(x, y, s=size,c=c)
