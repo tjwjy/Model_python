@@ -3,17 +3,17 @@ import numpy as np
 import math
 from scipy.optimize import leastsq
 class Cal_para():
-    locationList=[]
+    grid=[]
     idList=[]
-    pointidList=[]
+    locations=[]
     def __init__(self,route):
         if(len(route)):
             for position in route:
-                self.locationList.append([position[0],position[1]])
+                self.grid.append([position[0],position[1]])
                 self.idList.append(position[2])
             if(len(route[0])):
                 for position in route:
-                    self.pointidList.append(position[4])
+                    self.locations.append(position[4])
         else:
             pass
 
@@ -39,7 +39,7 @@ class Cal_para():
         nums=self.set_step(2)#选取抽样的步长，2，采用100为步长统计数据
         disput=[]
         for num in nums:
-            sum_number=self.get_visit_location_number(self.pointidList,num)
+            sum_number=self.get_visit_location_number(self.locations,num)
             disput.append(sum_number)
         return disput
 
@@ -64,7 +64,7 @@ class Cal_para():
         nums=self.set_step(1)
         disput = []
         for num in nums:
-            sum_number = self.get_Rog(self.locationList, num)
+            sum_number = self.get_Rog(self.grid, num)
             disput.append(sum_number)
         return disput
 
@@ -89,7 +89,7 @@ class Cal_para():
 
     def get_weight_raster_disput(self):
         disputs = [0] * (int(math.log(len(self.idList)) * 3))
-        disput = self.get_weight(self.pointidList)
+        disput = self.get_weight(self.locations)
         for i in range(min(len(disput),len(disputs))):
             disputs[i]=disput[i]
         return disput
@@ -113,7 +113,7 @@ class Cal_para():
         nums = self.set_step(2)
         locations_weight = []
         for num in nums:
-            locations_weight.append(self.get_location_size(self.pointidList, num))
+            locations_weight.append(self.get_location_size(self.locations, num))
         return locations_weight
 
 
