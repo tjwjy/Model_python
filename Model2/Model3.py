@@ -140,9 +140,9 @@ class Commute_Model(Model):
             postion=self.HomePosition
         if(flag==1):
             postion=self.WorkPosition
-        L_tempPlace.append(postion)
         if(postion in L_place):
             L_place.remove(postion)
+            L_tempPlace.append(postion)
         self.start_position = postion
         S = S + 1
         index = 1
@@ -226,9 +226,9 @@ class HomeorWork_Model(Model):
             postion = self.HomePosition
         if (flag == 1):
             postion = self.WorkPosition
-        L_tempPlace.append(postion)
         if (postion in L_place):
             L_place.remove(postion)
+            L_tempPlace.append(postion)
         self.start_position = postion
         S = S + 1
         index = 1
