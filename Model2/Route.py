@@ -28,3 +28,9 @@ class route:
         self.add_location(routes)
         self.add_time(times)
         print " "
+    def set_route_from_route(self,temp_route):
+        self.route=temp_route.route
+        self.locations=temp_route.locations
+        self.state=temp_route.state
+        self.grid=temp_route.grid
+        self.time=temp_route.time
