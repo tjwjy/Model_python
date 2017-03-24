@@ -46,6 +46,7 @@ class Cal_para():
     #计算随着时间的退役，rog的变化
     def get_Rog(self,locations,num):
         locationlist=locations[0:num]
+        list2=np.unique(locationlist)
         x=0
         y=0
         for location in locationlist:
@@ -61,9 +62,16 @@ class Cal_para():
         r=math.sqrt((x2+y2)/(len(locationlist)))
         return r
     def get_rog_disput(self):
+
         nums=self.set_step(1)
         disput = []
         for num in nums:
+            # uni_id=np.unique(self.idList[0:num]).tolist()
+            # xy=[]
+            # for i,id in enumerate(self.idList):
+            #     if(id in uni_id):
+            #         xy.append(self.grid[i])
+            #         uni_id.remove(id)
             sum_number = self.get_Rog(self.grid, num)
             disput.append(sum_number)
         return disput

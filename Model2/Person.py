@@ -102,6 +102,8 @@ class normal_person(Person):
 
 
     def simulate(self):
+        print self.home_loc
+        print self.work_loc
         simulate_time=0
         while(simulate_time<self.simulate_time):
             self.set_work_time()
@@ -134,7 +136,7 @@ class normal_person(Person):
                 #pass
                 while(t_now<self.rest_time[0]):
                     temp=random.random()
-                    if(temp>0.9):
+                    if(temp<0.9):
                         break
                     temp_Model = Model3.Commute_Model(self.args_model,self.args_t,self.args_steps,self.grid,self.locations,self.commute_LocationList,self.home_loc,self.work_loc)
                     temp_Model.set_tbegin(t_now,t_now+0.1)
@@ -149,7 +151,7 @@ class normal_person(Person):
                                                          self.locations, self.home_locationList, self.home_loc,
                                                          self.work_loc)
                     temp_Model.set_tbegin(t_now, self.rest_time[0])
-                    self.work_locatonList, tempRoute = temp_Model.get_route(0)
+                    self.home_locationList, tempRoute = temp_Model.get_route(0)
                     time = tempRoute.time
                     route = tempRoute.route
                     state = 3
