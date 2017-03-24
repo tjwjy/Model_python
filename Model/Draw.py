@@ -96,6 +96,7 @@ class draw():
             im = plt.scatter(x, y, s=size,c=c)
             ims.append([im])
         anim1 = animation.ArtistAnimation(fig2, ims, interval=500, blit=True)
+        plt.savefig('d:/location.png', facecolor="white", transparent=True, dpi=600)
         plt.show()
 
 
