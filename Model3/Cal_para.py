@@ -134,7 +134,7 @@ class Cal_para():
         return temp_y
 
     def error(self, p, x, y, s):
-        print s
+        print (s)
         temp_answer = []
         tempfunc = self.func(p, x)
         for i in range(0, min(len(tempfunc), len(y))):

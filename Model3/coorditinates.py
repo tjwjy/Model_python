@@ -40,7 +40,7 @@ class coordition():
         elif (len(dimenssion == 1)):
             self.grid_dimenssion = [dimenssion, dimenssion]
         else:
-            print 'grid dimenssion is not right'
+            print ('grid dimenssion is not right')
 
     def __init__(self, dimenssion):
         pass
@@ -84,7 +84,7 @@ class normal_raster(coordition):
             tag=(temp_int_x)*self.grid_dimenssion[0]+temp_int_y
             self.locationList.append([tempx,tempy,tag,1,t])
             t+=1
-        print 'ok'
+        print ('ok')
 
 class random_raster(coordition):
     def set_grid(self):

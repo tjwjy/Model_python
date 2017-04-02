@@ -19,9 +19,18 @@ draw=Draw2.Draw(commute_Route,[person1.home_loc,person1.work_loc],[fig1,fig2],'c
 draw.draw_visit_location_number_disput()
 draw.draw_location_disput_raster()
 
-fig3=plt.figure(3)
+fig3=plt.figure(3,facecolor='white')
 fig4=plt.figure(4)
 draw=Draw2.Draw(person1.Personroute,[person1.home_loc,person1.work_loc],[fig3,fig4],"name")
+
+draw.draw_visit_location_number_disput()
+draw.draw_location_disput_raster()
+
+fig5=plt.figure(5)
+fig6=plt.figure(6)
+home_Route=Route.route(person1.grid,person1.locations)
+home_Route.route=person1.home_locationList
+draw=Draw2.Draw(home_Route,[person1.home_loc,person1.work_loc],[fig5,fig6],'home')
 
 draw.draw_visit_location_number_disput()
 draw.draw_location_disput_raster()
