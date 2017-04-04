@@ -15,15 +15,22 @@
 # plt.show()
 import Model5
 import Environment
-import random
-args_model=[0,0.6,-0.21]
-args_time=[-2,0,5,10000]
+import Individual
+import Cal_para
+import Draw
+args_model=[0.6,-0.21]
+args_time=[2,1,10000]
 args_steps=[-1.80,5]
 args_grid=[[20,20],[10,2,10,2],200]
 time=100
 temp_routeList=[]
 Envir=Environment.normal_Environment(dimenssion=[20],xy_args=args_grid[1],size=200)
-model=Model5.Commute_Model(args_model=args_model,args_t=args_time,args_steps=args_steps,environment=Envir,visited_Place=[],homeposition=random.choice(Envir.locations),workposition=random.choice(Envir.locations))
-model.set_tbegin(0,10)
-route,mid=model.get_route(0)
+#model=Model5.HomeOrWork_Model(args_model=args_model,args_t=args_time,args_steps=args_steps,environment=Envir,visited_Place=[],homeposition=random.choice(Envir.locations),workposition=random.choice(Envir.locations))
+model=Individual.Nomal_Individual(args_model=args_model,args_t=args_time,args_step=args_steps,simulate_time=time,Environment=Envir)
+model.simulate()
 print (9)
+cal=Cal_para.Cal_para(model.data_mid.route,Envir)
+dis=cal.get_visit_location_number_disput()
+draw=Draw.Draw(cal,[model.home_loc,model.work_loc])
+draw.draw_visit_location_number_disput()
+draw.draw_location_disput_raster(model.data_mid)

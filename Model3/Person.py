@@ -60,7 +60,7 @@ class Person():
     def set_time(self,time):
         self.time+=time
         self.time24=time%24
-        print self.time24
+        print (self.time24)
 
 class normal_person(Person):
     #create the model location disput nomal

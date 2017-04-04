@@ -7,7 +7,7 @@ class data_mid():
     #people tag
     environment=Environment.Environment()
     #environment
-    def __init__(self,envrionment,person_tag):
+    def __init__(self,envrionment,person_tag=0):
         self.person_tag=person_tag
         self.environment.set_environment(envrionment)
         self.route=[]
