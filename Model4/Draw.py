@@ -36,7 +36,7 @@ class Draw():
         fig = self.fig1
         axes = fig.add_subplot(2, 2, 1, xlim=(1, 100), ylim=(0, 600))
         y,z= self.visit_location_number_disput
-        x = [i for i in range(101)]
+        x = [i for i in range(len(self.cal.daylast))]
         axes.set_xlabel("time")
         axes.set_ylabel("number of place")
         #axes.set_title("number of place distribution")
@@ -52,7 +52,7 @@ class Draw():
         axes3 = fig.add_subplot(2, 2, 3, xlim=(1, 100), ylim=(0, 4))
         line, = axes.plot([], [], lw=2)
         y,z = self.rog_disput
-        x = [i for i in range(101)]
+        x = [i for i in range(len(self.cal.daylast))]
         axes3.plot(x, y)
         axes3.set_xlabel("time")
         axes3.set_ylabel("ROG")
@@ -77,20 +77,31 @@ class Draw():
 
     def draw_location_disput(self,data_mid):
         tag = 0
-        fig2 = plt.figure(2)
+        fig2 = self.fig2
         locationWeight = self.cal.get_location_size_disput()
         axes = fig2.add_subplot(1, 1, 1, xlim=(1, 20), ylim=(0, 20))
         ims = []
         for i in range(len(locationWeight)):
             x = []
             y = []
-            for j in range(len(locationWeight[0])):
-                x.append(data_mid.route[j].location[0])
-                y.append(data_mid.route[j].location[1])
-            size = locationWeight[i]
-            im = plt.scatter(x, y, s=size)
+            c = []
+            size = []
+            for item in self.important_place:
+                x.append(item.location[0])
+                y.append(item.location[1])
+                c.append('r')
+                size.append(100)
+            for j in range(len(locationWeight[i])):
+                x.append(data_mid.environment.locations[j].location[0])
+                y.append(data_mid.environment.locations[j].location[1])
+                c.append('b')
+            size += locationWeight[i]
+            im = plt.scatter(x, y, s=size, c=c)
             ims.append([im])
+            # if(i%10==0):
+            #     plt.savefig('D:/figname'+str(i)+".png", facecolor="white", transparent=True, dpi=600)
         anim1 = animation.ArtistAnimation(fig2, ims, interval=500, blit=True)
+        plt.savefig('d:/'+self.filename+'location.png', facecolor="white",transparent=True,dpi=600)
         plt.show()
 
         # 比较不同的点被访问的数量的大小
@@ -112,8 +123,8 @@ class Draw():
                 c.append('r')
                 size.append(100)
             for j in range(len(locationWeight[0])):
-                x.append(data_mid.route[j].location[0])
-                y.append(data_mid.route[j].location[1])
+                x.append(data_mid.environment.locations[j].location[0])
+                y.append(data_mid.environment.locations[j].location[1])
                 c.append('b')
             size += locationWeight[i]
             im = plt.scatter(x, y, s=size, c=c)

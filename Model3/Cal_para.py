@@ -7,6 +7,9 @@ class Cal_para():
     idList=[]
     locations=[]
     def __init__(self,route):
+        self.grid = []
+        self.idList = []
+        self.locations = []
         if(len(route)):
             for position in route:
                 self.grid.append([position[0],position[1]])

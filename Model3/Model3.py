@@ -174,8 +174,10 @@ class HomeorWork_Model(Model):
     def dis(self,temp1,flag):
         if(flag==0 and len(self.HomePosition)>0):
             r1 = math.pow((temp1[0] - self.HomePosition[0]), 2) + math.pow((temp1[1] - self.HomePosition[1]), 2)
+            return r1
         elif(flag==1 and len(self.WorkPosition)>0):
             r1 = math.pow((temp1[0] - self.WorkPosition[0]), 2) + math.pow((temp1[1] - self.WorkPosition[1]), 2)
+            return r1
         else:
             return 1
     def get_next_position(self,L_place,flag):

@@ -87,14 +87,18 @@ class Nomal_Individual(Individual):
         self.data_mid=data_mid.data_mid(Environment,person_tag=0)
         self.set_home_loc()
         self.set_work_loc()
-        self.home_locationList = []
+        self.home_locationList =[]
         self.work_locatonList = []
         self.commute_LocationList = []
+        for i in range(1):
+            self.home_locationList.append(self.home_loc)
+            self.work_locatonList.append(self.work_loc)
+            self.data_mid.add_location([self.home_loc,self.work_loc])
 
 
     def simulate(self):
-        print (self.home_loc)
-        print (self.work_loc)
+        print (self.home_loc.location)
+        print (self.work_loc.location)
         simulate_time=0
         while(simulate_time<self.simulate_time):
             self.set_work_time()

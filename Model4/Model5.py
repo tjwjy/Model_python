@@ -139,11 +139,10 @@ class Commute_Model(Model):
             postion=self.WorkPosition
         if(postion in L_place):
             L_place.remove(postion)
-            L_tempPlace.append(postion)
-            temp_point = Point.Point(postion.location, postion.gridID, postion.ID, t=self.t_now, state=3,
+        L_tempPlace.append(postion)
+        temp_point = Point.Point(postion.location, postion.gridID, postion.ID, t=self.t_now, state=3,
                                      weight=postion.weight)
-            mid.route.append(temp_point)
-        self.start_position = postion
+        mid.route.append(temp_point)
         S = S + 1
         index = 1
         while ((self.t_now < self.t_end) & (index < len(self.ts) - 1)):
@@ -189,7 +188,7 @@ class HomeOrWork_Model(Model):
         temp_positon = []
         # 在半径内的所有满足条件的x，y之差
         for p in L_place:
-            dis=self.dis(p,flag)
+            dis=self.dis(p,flag )
             if(dis<max_step*max_step):
                 temp_positon.append([p,dis])
         for t_p in temp_positon:
@@ -218,7 +217,7 @@ class HomeOrWork_Model(Model):
         else:
             exit()
         gama = self.args_model[1]
-        S = len(self.visited_Place)
+        S =len(self.visited_Place)
         r = self.args_model[0]
         # 随机选择起始点，并初始化所要用到的循环数据
         if(flag==0):
@@ -227,7 +226,11 @@ class HomeOrWork_Model(Model):
             postion=self.WorkPosition
         if(postion in L_place):
             L_place.remove(postion)
-            L_tempPlace.append(postion)
+        L_tempPlace.append(postion)
+        L_tempPlace.append(postion)
+        temp_point = Point.Point(postion.location, postion.gridID, postion.ID, t=self.t_now, state=3,
+                                 weight=postion.weight)
+        mid.route.append(temp_point)
         self.start_position = postion
         S = S + 1
         index = 1
@@ -249,7 +252,7 @@ class HomeOrWork_Model(Model):
                 postion = random.choice(L_tempPlace)
                 L_tempPlace.append(postion)
                 index = index + 1
-            temp_point=Point.Point(postion.location,postion.gridID,postion.ID,t=self.t_now,state=3,weight=postion.weight)
+            temp_point=Point.Point(postion.location,postion.gridID,postion.ID,t=self.t_now,state=flag,weight=postion.weight)
             mid.route.append(temp_point)
             self.t_now = self.t_now + self.ts[index]
         # for tempPlace in L_tempPlace:

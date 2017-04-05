@@ -41,7 +41,7 @@ class Cal_para():
     # 拜访的gridid的数量随着时间的变化
     def get_visit_location_number_raster_disput(self):
         #得到随着时间的增长，拜访的地点的数量的变化
-        nums=self.daylast#选取抽样的步长，2，采用100为步长统计数据
+        nums=self.daylast
         disput=[]
         for num in nums:
             sum_number=self.get_visit_location_number(self.gridIDList,num)
@@ -87,12 +87,8 @@ class Cal_para():
         temp1 = np.array(ids)
         temp2 = np.bincount(temp1)
         temp3 = temp2.tolist()
-        temp4 = sorted(temp3, reverse=True)
-        disput = []
-        for temp in temp4:
-            if (temp > 0):
-                disput.append(temp)
-        return disput
+        temp4=sorted(temp3,reverse=True)
+        return temp4
     def get_visit_frequency_disput(self):
         disput=self.get_weight(self.idList)
         return disput
@@ -161,7 +157,7 @@ class Cal_para():
             num1=[]
             for i,t in enumerate(self.tList):
                 if(i>0 and i<len(self.tList)-1):
-                    if(max([t,self.tList[i-1],self.tList[i+1]])==t):
+                    if(t>=self.tList[i-1] and self.tList[i+1]<t):
                         print (i)
                         num1.append(i)
             num1.append(len(self.tList)-1)

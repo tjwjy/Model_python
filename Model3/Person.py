@@ -78,12 +78,12 @@ class normal_person(Person):
         if(len(self.locations)):
             self.home_loc=random.choice(self.locations)
         else:
-            print 'you should set grid first'
+            print ('you should set grid first')
     def set_work_loc(self):
         if (len(self.locations)):
             self.work_loc= random.choice(self.locations)
         else:
-            print 'you should set grid first'
+            print ('you should set grid first')
     def set_work_time(self):
         start=random.normalvariate(7.5,.5)
         end=random.normalvariate(17.5,1)
@@ -105,8 +105,8 @@ class normal_person(Person):
 
 
     def simulate(self):
-        print self.home_loc
-        print self.work_loc
+        print (self.home_loc)
+        print (self.work_loc)
         simulate_time=0
         while(simulate_time<self.simulate_time):
             self.set_work_time()

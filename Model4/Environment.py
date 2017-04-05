@@ -36,6 +36,9 @@ class Environment():
 
 class normal_Environment(Environment):
     def __init__(self, dimenssion, xy_args=[0,0,0,0], size=100):
+        self.grid = []
+        self.locations = []
+        self.grid_dimenssion = []
         self.set_dimenssion(dimenssion)
         self.set_grid()
         self.set_locationList(xy_args, size)

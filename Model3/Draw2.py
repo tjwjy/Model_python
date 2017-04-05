@@ -36,9 +36,6 @@ class Draw():
         else:
             self.fig1=fig[0]
             self.fig2=fig[1]
-        print self.visit_location_number_disput
-        print self.visite_weight_disput
-        print self.rog_disput
 
     def draw_visit_location_number_disput(self):
         ##绘图
@@ -78,7 +75,6 @@ class Draw():
         ytemp = k * xtemp + b
         axes4.plot(xtemp, ytemp)
         axes4.set_ylabel("try")
-        print k, b
         axes4.set_xlabel("time")
         axes4.set_ylabel("number of place")
         # 比较不同栅格拜访数量的大小
@@ -128,7 +124,7 @@ class Draw():
             ims.append([im])
             # if(i%10==0):
             #     plt.savefig('D:/figname'+str(i)+".png", facecolor="white", transparent=True, dpi=600)
-        anim1 = animation.ArtistAnimation(fig2, ims, interval=500, blit=True)
+        anim1 = animation.ArtistAnimation(fig2, ims, interval=5000, blit=True)
         plt.savefig('d:/'+self.filename+'location.png', facecolor="white",transparent=True,dpi=600)
         plt.show()
 

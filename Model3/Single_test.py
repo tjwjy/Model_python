@@ -30,8 +30,16 @@ fig5=plt.figure(5)
 fig6=plt.figure(6)
 home_Route=Route.route(person1.grid,person1.locations)
 home_Route.route=person1.home_locationList
-draw=Draw2.Draw(home_Route,[person1.home_loc,person1.work_loc],[fig5,fig6],'home')
+draw3=Draw2.Draw(home_Route,[person1.home_loc,person1.work_loc],[fig5,fig6],'home')
 
-draw.draw_visit_location_number_disput()
-draw.draw_location_disput_raster()
+draw3.draw_visit_location_number_disput()
+draw3.draw_location_disput_raster()
 
+fig5=plt.figure(7)
+fig6=plt.figure(9)
+work_Route=Route.route(person1.grid,person1.locations)
+work_Route.route=person1.work_locatonList
+draw3=Draw2.Draw(work_Route,[person1.home_loc,person1.work_loc],[fig5,fig6],'work')
+
+draw3.draw_visit_location_number_disput()
+draw3.draw_location_disput_raster()
