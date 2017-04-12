@@ -23,9 +23,11 @@ class IO():
                         f.writelines(temp_str)
                 f.writelines('0\n')
             with (open(path, 'a')) as f:
-                temp_str = 'People' + '\n'
-                f.write(temp_str)
+                # temp_str = 'people' + '\n'
+                # f.write(temp_str)
+                f.write('\n')
                 temp_str = str(self.mid.person_tag) + '\n'
+
                 f.write(temp_str)
                 lg=len(self.mid.route)
                 if(lg):
