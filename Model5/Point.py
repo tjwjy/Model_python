@@ -13,11 +13,11 @@ class Point():
     #state,the proceduer(home,work,commuting)the point was visited
     state=0
     Neareast_point=[]
-    def __init__(self,location,gridid,ID,t=0,state=0,weight=1):
+    def __init__(self,location,gridid,ID,near=[],t=0,state=0,weight=1):
         self.location=location
         self.gridID=gridid
         self.ID=ID
         self.t=t
         self.state=state
         self.weight=weight
-        self.Neareast_point=[]
+        self.Neareast_point=near

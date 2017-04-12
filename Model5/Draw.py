@@ -132,6 +132,6 @@ class Draw():
             # if(i%10==0):
             #     plt.savefig('D:/figname'+str(i)+".png", facecolor="white", transparent=True, dpi=600)
         anim1 = animation.ArtistAnimation(fig2, ims, interval=500, blit=True)
-        plt.savefig('d:/'+self.filename+'rasterlocation.png', facecolor="white",transparent=True,dpi=600)
+        plt.savefig('d:/'+self.filename+'location.png', facecolor="white",transparent=True,dpi=600)
         plt.show()
 
