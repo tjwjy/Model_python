@@ -7,10 +7,12 @@ class data_mid():
     #people tag
     environment=Environment.Environment()
     #environment
-    def __init__(self,envrionment,person_tag=0):
+    important_loc=[]
+    def __init__(self,envrionment,person_tag=0,important_loc=[]):
         self.person_tag=person_tag
         self.environment.set_environment(envrionment)
         self.route=[]
+        self.important_loc=important_loc
 
     def add_location(self, pointList):
         for item in pointList:

@@ -89,7 +89,7 @@ class Model():
     def set_t(self):
         if (len(self.args_t) != 0):
             theoretial_distribution=powerlaw.Power_Law(xmin=self.args_t[1],parameters=[-self.args_t[0]])
-            self.ts = theoretial_distribution.generate_random(1000)
+            self.ts = theoretial_distribution.generate_random(10000)
 
 class Commute_Model(Model):
     def dis(self,temp1):
