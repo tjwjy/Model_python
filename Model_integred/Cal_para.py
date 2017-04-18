@@ -162,7 +162,6 @@ class Cal_para():
             for i,t in enumerate(self.tList):
                 if(i>0 and i<len(self.tList)-1):
                     if(t>=self.tList[i-1] and self.tList[i+1]<t):
-                        print (i)
                         num1.append(i)
             num1.append(len(self.tList)-1)
             return num1

@@ -21,7 +21,7 @@ class IO():
                 if (lg):
                     for i, item in enumerate(self.mid.environment.locations):
                         temp_str = str(item.location[0]) + " " + str(item.location[1]) + " " + str(
-                            item.ID) + " " + str(item.state) + " " + str(item.weight) + " "+str(item.gridID)+"\n"
+                            item.ID) + " " + str(item.state) + " " + str(item.weight) + " "+str(item.gridID)+" "+str(item.t)+"\n"
                         f.writelines(temp_str)
                 f.writelines('0\n')
         with (open(path, 'a+')) as f:
@@ -30,7 +30,10 @@ class IO():
             temp_str = str(self.mid.person_tag) + '\n'
             f.write(temp_str)
             if(self.mid.important_loc):
-                temp_str = str(self.mid.important_loc) + '\n'
+                temp_str=''
+                for item in self.mid.important_loc:
+                    temp_str = temp_str+str(item.ID)+' '
+                temp_str=temp_str[0:len(temp_str)-1]+'\n'
                 f.write(temp_str)
             else:
                 temp_str=' '+'\n'
@@ -38,7 +41,7 @@ class IO():
             lg=len(self.mid.route)
             if(lg):
                 for i,item in enumerate(self.mid.route):
-                    temp_str=str(item.location[0])+" "+str(item.location[1])+" "+str(item.ID)+ " "+str(item.state)+" "+str(item.weight)+ " "+str(item.gridID)+"\n"
+                    temp_str=str(item.location[0])+" "+str(item.location[1])+" "+str(item.ID)+ " "+str(item.state)+" "+str(item.weight)+ " "+str(item.gridID)+" "+str(item.t)+"\n"
                     f.writelines(temp_str)
             f.writelines('0\n')
 
@@ -69,7 +72,8 @@ class IO():
                     state=int(temp_str[3])
                     weight=int(temp_str[4])
                     gridID=int(temp_str[5])
-                    point=Point.Point([tempx,tempy],ID=ID,state=state,weight=weight,gridid=gridID)
+                    t=float(temp_str[6])
+                    point=Point.Point([tempx,tempy],ID=ID,state=state,weight=weight,gridid=gridID,t=t)
                     temp_route.append(point)
                 else:
                     break
@@ -86,10 +90,12 @@ class IO():
                 temp_str = f.readline()
                 important_loc=[]
                 temp = temp_str.rstrip('\n')
-                if(temp==''or temp_str==''):
+                if not(temp==''or temp_str==''):
                     temp = temp.split(" ")
-                    for i in range(int(len(temp_str)/2)):
-                        important_loc.append([float(temp[2*i]),float(temp[2*i+1])])
+                    for i in range(int(len(temp))):
+                        index=int(temp[i])
+                        point=temp_envir.locations[index]
+                        important_loc.append(point)
                 while (True):
                     temp_str = f.readline()
                     temp_str = temp_str.rstrip('\n')
@@ -101,7 +107,8 @@ class IO():
                         state = int(temp_str[3])
                         weight = int(temp_str[4])
                         gridID = int(temp_str[5])
-                        point = Point.Point([tempx, tempy], gridid=gridID, ID=ID, state=state, weight=weight)
+                        t=float(temp_str[6])
+                        point = Point.Point([tempx, tempy], gridid=gridID, ID=ID, state=state, weight=weight,t=t)
                         temp_route2.append(point)
                     else:
                         break
