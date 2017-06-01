@@ -237,3 +237,31 @@ class Nomal_Network_Individual(Individual):
                 simulate_time += 1
                 #  print(simulate_time)+'  001'
                 # sleep
+class Nomal_Individual_HomeAndWork_Seperate(Nomal_Individual):
+    def __init__(self,args_model, args_step, args_t, simulate_time,Environment):
+        Nomal_Individual.__init__(self,args_model, args_step, args_t, simulate_time,Environment)
+    def __set_grid_loc_number(self, grid_value_list,size):
+        grid_number=[]
+        if(grid_value_list):
+            temp_choice = []
+            for i,item in enumerate(grid_value_list):
+                if(item>0):
+                    for j in range(item):
+                        temp_choice.append(i)
+            for i in range(size):
+                grid_number.append(random.choice(temp_choice))
+            return grid_number
+        else:
+            return self.Envir.grid
+    def set_home_loc2(self,grid_value_list):
+        temp_point=[]
+        while(not temp_point):
+            temp=self.__set_grid_loc_number(grid_value_list,size=100)
+            gridid=random.choice(temp)
+            temp_point=[point for point in self.Envir.locations if point.gridID==gridid]
+        self.home_loc=random.choice(temp_point)
+    def set_work_loc2(self,grid_value_list2):
+        temp = self.__set_grid_loc_number(grid_value_list2, size=100)
+        gridid=random.choice(temp)
+        temp_point=[point for point in self.Envir.locations if point.gridID==gridid]
+        self.work=random.choice(temp_point)

@@ -4,8 +4,10 @@ import Cal_para
 import data_mid
 import  numpy as np
 class Cal_para2():
-    Envir=Environment.Environment()
-    data_mid_list=[]
+    #para
+    # Envir=Environment.Environment()
+    # data_mid_list=[]
+
     def __init__(self,data_mid_list):
         if(data_mid_list):
             self.data_mid_list=data_mid_list
@@ -105,6 +107,30 @@ class Cal_para2():
 
     ##############################################################################################################################
 
+
+    def get_OD_2_grid(self,O_point,D_point):
+        if(O_point not in self.Envir.grid):
+            raise Exception("O_point is not in the gridID")
+        if(D_point not in self.Envir.grid):
+            raise Exception("D_point is not in the gridID")
+        ODList=[]
+        for item in self.data_mid_list:
+            route=item.route
+            for i in range(0,len(route)-1):
+                if route[i].gridID==O_point:
+                    if(route[i+1].gridID==D_point):
+                        ODList.append((route[i],route[i+1]))
+        return ODList
+    def cal_OD_24hours_disput(self,ODlist):
+        if ODlist:
+            t_list=[0]*25
+            for OD in ODlist:
+                t=OD[0].t
+                t_int=int(t)
+                t_list[t_int]+=1
+            return t_list
+        else:
+            raise Exception("there is no t_list")
 
 
 

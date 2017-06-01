@@ -36,7 +36,7 @@ class IO():
                 temp_str=temp_str[0:len(temp_str)-1]+'\n'
                 f.write(temp_str)
             else:
-                temp_str=' '+'\n'
+                temp_str='0'+'\n'
                 f.writelines(temp_str)
             lg=len(self.mid.route)
             if(lg):
@@ -60,6 +60,7 @@ class IO():
                 temp_str=temp_str.split(' ')
                 temp_int=[int(temp_str[0]),int(temp_str[1])]
                 temp_envir.set_dimenssion(temp_int)
+                temp_envir.set_grid()
             tag=True
             while(tag):
                 temp_str = f.readline()
@@ -90,7 +91,7 @@ class IO():
                 temp_str = f.readline()
                 important_loc=[]
                 temp = temp_str.rstrip('\n')
-                if not(temp==''or temp_str==''):
+                if not(temp=='0'):
                     temp = temp.split(" ")
                     for i in range(int(len(temp))):
                         index=int(temp[i])

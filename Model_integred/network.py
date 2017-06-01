@@ -116,6 +116,6 @@ class NetWork():
 
 
 
-# nt=NetWork()
-# nt.read_shpfile(0)
+nt=NetWork()
+nt.read_shpfile(0)
 # nt.add_positon_normal(12)

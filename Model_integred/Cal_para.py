@@ -4,13 +4,18 @@ import numpy as np
 import math
 from scipy.optimize import leastsq
 class Cal_para():
-    Envir=Environment.Environment()
-    PointList=[]
-    locationList=[]
-    idList=[]
-    gridIDList=[]
-    tList=[]
-    daylast=[]
+    #this document is used to cal the single parameters using single peoples activity
+    #if you want cal many peple activity
+    #using cal_para2
+
+    # Envir=Environment.Environment()
+    # PointList=[]
+    # locationList=[]
+    # idList=[]
+    # gridIDList=[]
+    # tList=[]
+    # daylast=[]
+
     def __init__(self,PointList,Environment):
         self.locationList = []
         self.idList = []
